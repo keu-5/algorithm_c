@@ -1,0 +1,26 @@
+TARGET=	list02_1.o \
+	list02_2.o list02_3.o \
+	list03_1.o \
+	list04_1 list04_2.o \
+	list05_3.o list05_6.o \
+	list06_1.o \
+	list08_1.o list08_2.o list08_3.o \
+	list09_1.o list09_2.o list09_3.o list09_4.o list09_5.o \
+	list10_1 \
+	list12_1.o list12_2.o list12_3.o \
+	list13_1.o list13_2.o \
+	list14_1.o list14_2.o list14_3.o \
+	list15_1.o list15_2.o \
+	list16_1.o list16_2.o list16_3.o list16_4.o \
+	list17_1.o list17_2.o list17_3.o \
+	list18_1.o list18_2.o \
+	list19_1 \
+	list20_2 list20_4 \
+	list21_1 \
+	list22_1.o \
+	list23_1.o
+
+all:	$(TARGET)
+
+clean:
+	rm -f $(TARGET)
