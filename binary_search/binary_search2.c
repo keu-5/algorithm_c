@@ -28,14 +28,7 @@ int binary_search(int key) {
     return -1; // キーが見つからなかった場合は-1を返す
 }
 
-void add_binary(int key, int data) {
-    int low, high, middle;
-    int pos;
 
-    low = 0;
-    high = n - 1; //NOTE:ここどうする?
-    
-}
 
 int main(void) {
     // テーブルの初期化
