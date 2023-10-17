@@ -1,35 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 循環リストのノードを表す構造体
+// 連結リストのノードを表す構造体
 typedef struct Node {
     int data;
     struct Node *next;
-} Node; //struct Node → Nodeとして利用できるようにする
+} Node;
 
 Node *head = NULL;  // リストの先頭
 
 // リストに要素を追加する関数
 void insert(int data) {
     Node *newNode = (Node *)malloc(sizeof(Node));
-    if (!newNode) { //メモリ確保に失敗した場合、newNodeはNULLになる
+    if (!newNode) {
         printf("メモリが足りません\n");
         exit(1);
     }
     newNode->data = data;
-
-    if (head == NULL) {
-        newNode->next = newNode;  // リストが空の場合、自己参照に設定
-        head = newNode; //循環リストなので、head->next = newNode
-    } else {
-        Node *temp = head;
-        while (temp->next != head) {
-            temp = temp->next;
-        }
-        temp->next = newNode;
-        newNode->next = head;  // 新しいノードが先頭ノードを指す
-    }
-
+    newNode->next = head;
+    head = newNode;
     printf("要素 %d をリストに追加しました\n", data);
 }
 
@@ -42,45 +31,32 @@ void delete(int data) {
 
     Node *current = head;
     Node *prev = NULL;
-    do {
+    while (current != NULL) {
         if (current->data == data) {
-            if (current == head) {
-                // 先頭ノードの削除の場合、headを更新
-                Node *temp = head;
-                while (temp->next != head) {
-                    temp = temp->next;
-                }
+            if (prev == NULL) {
                 head = current->next;
-                temp->next = head;
             } else {
                 prev->next = current->next;
             }
-
             free(current);
             printf("要素 %d を削除しました\n", data);
             return;
         }
-
         prev = current;
         current = current->next;
-    } while (current != head);
+    }
 
     printf("要素 %d はリストに見つかりませんでした\n", data);
 }
 
 // リストの内容を表示する関数
 void display() {
-    if (head == NULL) {
-        printf("リストは空です\n");
-        return;
-    }
-
     Node *current = head;
-    do {
+    printf("リストの内容: ");
+    while (current != NULL) {
         printf("%d ", current->data);
         current = current->next;
-    } while (current != head);
-
+    }
     printf("\n");
 }
 
@@ -88,7 +64,7 @@ int main() {
     int choice, data;
 
     while (1) {
-        printf("\n循環リスト操作メニュー:\n");
+        printf("\n連結リスト操作メニュー:\n");
         printf("1. 要素を追加\n");
         printf("2. 要素を削除\n");
         printf("3. リストを表示\n");
