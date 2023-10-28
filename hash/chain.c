@@ -6,7 +6,6 @@
 typedef int KEY;
 typedef char DATA;
 
-// Define a structure for a linked list node
 typedef struct cell {
     KEY key;
     DATA data;
@@ -61,7 +60,7 @@ int insert(KEY key, DATA data) {
     //循環リスト?
     p->key = key;
     p->data = data;
-    p->next = table[h];
+    p->next = table[h]; //頂点に挿入する
     table[h] = p;
 
     return 1;
@@ -70,6 +69,7 @@ int insert(KEY key, DATA data) {
 int delete(KEY key) {
     int h = hash(key);
     CELL *p = table[h];
+    //前の項
     CELL *q = NULL;
 
     while (p != NULL) {
@@ -84,7 +84,7 @@ int delete(KEY key) {
             free(p);
             return 1;
         }
-        //NOTE: ここから
+        
         q = p;
         p = p->next;
     }
@@ -97,7 +97,7 @@ int main(void) {
 
     for (int i = 0; i < 100; i++) {
         KEY key = i;
-        DATA data = (char)(i + 'A'); // You can use any meaningful data here
+        DATA data = (char)(i + 'A');
         insert(key, data);
     }
 
@@ -108,14 +108,6 @@ int main(void) {
             fprintf(stderr, "Key %d not found\n", key);
         } else {
             printf("Key %d found with value %c\n", key, *result);
-        }
-    }
-
-    for (int i = 0; i < 100; i++) {
-        KEY key = i;
-        int deleted = delete(key);
-        if (!deleted) {
-            fprintf(stderr, "Key %d not deleted\n", key);
         }
     }
 
