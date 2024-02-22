@@ -120,6 +120,39 @@ int *insertion_sort(int a[]) {
     return sortedArray;
 }
 
+/*
+    シェルソート
+*/
+int *shell_sort(int a[]) {
+    int h, i, j, t;
+    int *sortedArray = copy(a);
+
+    int count = 1;
+
+    //NOTE: hの初期値を決める （SIZE/9より大きくするとあんまりソートに変化がなくなるので）
+    for (h = 1; h < SIZE/9; h = h*3 + 1) {
+        ;
+    }
+    //NOTE: hを3つずつ減らす。最終的にh=1になる
+    for (; h > 0; h /= 3) {
+        //NOTE: h番目を起点とし、i番目の値を検証
+        for (i = h; i < SIZE; i++) {
+            j = i;
+            //NOTE: i番目の値を検証、jずつずらす  (挿入ソートと似てる)
+            while(j >= h && sortedArray[j-h] > sortedArray[j]) {
+                t = sortedArray[j];
+                sortedArray[j] = sortedArray[j-h];
+                sortedArray[j-h] = t;
+                j -= h;
+                count++;
+            }
+        }
+    }
+    printf("シェルソート：%d回\n", count);
+    
+    return sortedArray;
+}
+
 
 int main(void) {
     int a[SIZE];
@@ -135,6 +168,9 @@ int main(void) {
     show(sortedArray);
     
     sortedArray = insertion_sort(a);
+    show(sortedArray);
+    
+    sortedArray = shell_sort(a);
     show(sortedArray);
     
     return 0;
