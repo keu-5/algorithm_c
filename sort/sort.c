@@ -221,6 +221,45 @@ int *quick_sort(int a[]) {
   return sortedArray;
 }
 
+// 非再帰版クイックソート
+int *quick_sort_2(int a[]) {
+  int l, r, v;
+  int *sortedArray = copy(a);
+  int low[SIZE/2 + 1], high[SIZE/2 + 1];
+  int sp;
+
+  low[0] = 0;
+  high[0] = SIZE - 1;
+  sp = 1;
+
+  while (sp > 0) {
+    sp--;
+    l = low[sp];
+    r = high[sp];
+
+    if (l >= r) {
+      ;
+    } else {
+      v = partition(sortedArray, l, r);
+
+      if (v - l < r - v) {
+        low[sp] = v + 1;
+        high[sp++] = r;
+        low[sp] = l;
+        high[sp++] = v - 1;
+      } else {
+        low[sp] = l;
+        high[sp++] = v - 1;
+        low[sp] = v + 1;
+        high[sp++] = r;
+      }
+    }
+  }
+  printf("非再帰版クイックソート\n");
+
+  return sortedArray;
+}
+
 int main(void) {
   int a[SIZE];
   int *sortedArray;
@@ -242,6 +281,10 @@ int main(void) {
 
   //BUG: アルゴリズムは間違ってないはずなのに違う値を返す (なんか要素が減ってる)
   sortedArray = quick_sort(a);
+  show(sortedArray);
+
+  //HACK: maybe partition() is malfunction
+  sortedArray = quick_sort_2(a);
   show(sortedArray);
 
   return 0;
